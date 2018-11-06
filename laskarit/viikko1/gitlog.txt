@@ -87,3 +87,6 @@ Date:   Tue Nov 6 12:35:07 2018 +0200
 
  tiedosto.txt | 0
  1 file changed, 0 insertions(+), 0 deletions(-)
+
+
+hieman muokkausta
