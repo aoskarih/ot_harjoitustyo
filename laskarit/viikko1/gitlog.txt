@@ -1,0 +1,89 @@
+
+commit 053587428c471d03b3581d5b6d4a43133d2a3407
+Author: hyarhyar <arttu.hyvonen@helsinki.fi>
+Date:   Tue Nov 6 12:59:29 2018 +0200
+
+    kaikenlaista
+
+ tiedostoja/file1  | 0
+ tiedostoja/file2  | 0
+ tiedostoja/file22 | 1 +
+ tiedostoja/file3  | 1 +
+ 4 files changed, 2 insertions(+)
+
+commit 81ce8bd3fc3de19eb89a0a1f310c5d31a209674d
+Author: hyarhyar <arttu.hyvonen@helsinki.fi>
+Date:   Tue Nov 6 12:56:36 2018 +0200
+
+    hakemisto
+
+ tiedostoja/file1 | 0
+ tiedostoja/file2 | 0
+ tiedostoja/file3 | 0
+ 3 files changed, 0 insertions(+), 0 deletions(-)
+
+commit 6a4c3eb9618b16d30eb07984fb23a2699cc008f6
+Author: hyarhyar <arttu.hyvonen@helsinki.fi>
+Date:   Tue Nov 6 12:54:09 2018 +0200
+
+    a
+
+ eka.txt    | 3 +++
+ kolmas.txt | 5 +++++
+ 2 files changed, 8 insertions(+)
+
+commit 47dfd8b0ac81f5b665e83e0bd37c98ecafe1f96a
+Author: hyarhyar <arttu.hyvonen@helsinki.fi>
+Date:   Tue Nov 6 12:47:26 2018 +0200
+
+    nimetään
+
+ eka.txt      | 13 +++++++++++++
+ tiedosto.txt | 13 -------------
+ 2 files changed, 13 insertions(+), 13 deletions(-)
+
+commit c60ff42634d875e44fb0c538fe9bc243f8ce621b
+Author: hyarhyar <arttu.hyvonen@helsinki.fi>
+Date:   Tue Nov 6 12:45:46 2018 +0200
+
+    poistetaan
+
+ toinen.txt | 0
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+
+commit 9eed0dfa673093a601a941ae767fae3309929ff8
+Author: hyarhyar <arttu.hyvonen@helsinki.fi>
+Date:   Tue Nov 6 12:42:30 2018 +0200
+
+    lisaa tekstia
+
+ tiedosto.txt | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
+
+commit 7e264efbb6ed87d9f4e1dd8d93f24ae30d62ca45
+Author: hyarhyar <arttu.hyvonen@helsinki.fi>
+Date:   Tue Nov 6 12:41:40 2018 +0200
+
+    tekstia
+
+ tiedosto.txt | 7 +++++++
+ 1 file changed, 7 insertions(+)
+
+commit 27e81b6e4172f1bea1cd1301653309404b016bb2
+Author: hyarhyar <arttu.hyvonen@helsinki.fi>
+Date:   Tue Nov 6 12:37:27 2018 +0200
+
+    kommentti
+
+ tiedosto.txt | 1 +
+ toinen.txt   | 0
+ 2 files changed, 1 insertion(+)
+
+commit 5a9bee92e44114336f7223a6d92f9ecc6bd67d63
+Author: hyarhyar <arttu.hyvonen@helsinki.fi>
+Date:   Tue Nov 6 12:35:07 2018 +0200
+
+    tiedosto.txt luotu
+
+ tiedosto.txt | 0
+ 1 file changed, 0 insertions(+), 0 deletions(-)
