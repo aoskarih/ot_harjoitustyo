@@ -8,4 +8,4 @@
 
 [gitlog.txt](https://github.com/aoskarih/ot_harjoitustyo/blob/master/laskarit/viikko1/gitlog.txt)
 
-kone
+
