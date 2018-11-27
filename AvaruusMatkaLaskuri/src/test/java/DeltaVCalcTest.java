@@ -4,9 +4,9 @@
  * and open the template in the editor.
  */
 
-import main.DeltaVCalc;
-import main.PSystem;
-import main.Place;
+import spacetravelcalc.calculating.DeltaVCalc;
+import spacetravelcalc.calculating.PSystem;
+import spacetravelcalc.calculating.Place;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -65,5 +65,17 @@ public class DeltaVCalcTest {
     public void commomParentSameNotTopLeve() {
          PSystem parent = DeltaVCalc.lowestCommonParent(new Place(io, 0), new Place(europa, 0));
          assertEquals(parent, jupiter);
+    }
+    
+    @Test
+    public void toParent() {
+        double dv = DeltaVCalc.fromAToB(new Place(earth, 250e3), new Place(moon, 100e3))/100;
+        assertEquals(3900, (int) dv*100);
+    }
+    
+    @Test
+    public void toChild() {
+        double dv = DeltaVCalc.fromAToB(new Place(moon, 100e3), new Place(earth, 250e3))/100;
+        assertEquals(3900, (int) dv*100);
     }
 }

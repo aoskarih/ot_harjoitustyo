@@ -5,9 +5,9 @@
  */
 
 import java.util.ArrayList;
-import main.DeltaVCalc;
-import main.PSystem;
-import main.Place;
+import spacetravelcalc.calculating.DeltaVCalc;
+import spacetravelcalc.calculating.PSystem;
+import spacetravelcalc.calculating.Place;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;

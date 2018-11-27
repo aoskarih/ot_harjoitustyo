@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package main;
+package spacetravelcalc.calculating;
 
 /**
  *
@@ -11,11 +11,6 @@ package main;
  */
 public class DeltaVCalc {
 
-    private PSystem sys;
-    
-    public DeltaVCalc(PSystem sys) {
-        this.sys = sys;
-    }
 
     public static double fromAToB(Place a, Place b) {
         if (a.equals(b)) {
@@ -56,8 +51,8 @@ public class DeltaVCalc {
     public static PSystem lowestCommonParent(Place a, Place b) {
         PSystem parent1 = a.getParent();
         PSystem parent2 = b.getParent();
-        while (parent1.getRadius() != 0) {
-            while (parent2.getRadius() != 0) {
+        while (parent1.getPathRadius() != 0) {
+            while (parent2.getPathRadius() != 0) {
                 if(parent1.equals(parent2)) {
                     return parent1;
                 }
