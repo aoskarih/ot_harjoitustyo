@@ -12,19 +12,19 @@ package main;
 public class Place {
 
     private PSystem parent;
-    private double altittude;
+    private double radius;
     
-    public Place(PSystem parent, double radius) {
+    public Place(PSystem parent, double altitude) {
         this.parent = parent;
-        this.altittude = radius;
+        this.radius = parent.getRadius()+altitude;
     }
     
     public PSystem getParent() {
         return this.parent;
     }
     
-    public double getAltitude() {
-        return this.altittude;
+    public double getRadius() {
+        return this.radius;
     }
     
 }

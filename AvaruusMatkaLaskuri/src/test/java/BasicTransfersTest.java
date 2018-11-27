@@ -27,9 +27,9 @@ public class BasicTransfersTest {
     
     @Before
     public void setUp() {
-        earth = new PSystem(5.97e24, 6.371e6, 0, new ArrayList(), null);
-        lowOrbit = new Place(earth, earth.getRadius()+250e3);
-        geoOrbit = new Place(earth, earth.getRadius()+35786e3);
+        earth = new PSystem(5.97e24, 6.371e6, 0, null);
+        lowOrbit = new Place(earth, 250e3);
+        geoOrbit = new Place(earth, 35786e3);
     }
 
     @Test

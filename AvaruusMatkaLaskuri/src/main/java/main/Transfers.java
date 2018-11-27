@@ -13,14 +13,25 @@ public class Transfers {
     
     private static double G = 6.67408e-11;
     
-    public static double hohmann(double r1, double r2, double mass) {
+    //Hohmann transfer from r1 to r2
+    public static double hohmann1(double r1, double r2, double mass) {
         double dv1 = Math.sqrt(G*mass/r1) * (Math.sqrt((2 * r2) / (r1 + r2)) - 1);
-        double dv2 = Math.sqrt(G*mass/r2) * (1 - Math.sqrt((2 * r1) / (r1 + r2)));
-        System.out.println("Acceleration 1: "+Double.toString(dv1));
-        System.out.println("Acceleration 2: "+Double.toString(dv2));
-        return Math.abs(dv1 + dv2);
+        return Math.abs(dv1);
     }
     
+    public static double hohmann2(double r1, double r2, double mass) {
+        double dv2 = Math.sqrt(G*mass/r2) * (1 - Math.sqrt((2 * r1) / (r1 + r2)));
+        return Math.abs(dv2);
+    }
     
+    //Escape parent with relative speed v to parent
+    public static double escape(double r, double mass, double v) {
+        return Math.sqrt(Math.pow(v, 2) + 2 * (mass * G /r)) - Math.sqrt(mass * G/r);
+    }
+    
+    //Capture dv when arriving to child
+    public static double capture(double r, double mass, double v) {
+        return Math.sqrt(Math.pow(v, 2) + 2 * (mass * G /r)) - Math.sqrt(mass * G/r);
+    }
     
 }

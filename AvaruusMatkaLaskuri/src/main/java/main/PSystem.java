@@ -15,17 +15,28 @@ public class PSystem {
     
     private double centerMass;
     private double radius;
-    private double altitude;
-    private ArrayList<PSystem> children;
+    private double pathRadius;
+    private ArrayList<PSystem> children = new ArrayList<>();
     private PSystem parent;
     
     //Default system
-    public PSystem(double mass, double radius, double altitude, ArrayList children, PSystem parent) {
+    public PSystem(double mass, double radius, double altitude, PSystem parent) {
         this.centerMass = mass;
-        this.children = children;
-        this.parent = parent;
         this.radius = radius;
-        this.altitude = altitude;
+        
+        if (parent != null) {
+            parent.addChildren(this);
+            this.parent = parent;
+            this.pathRadius = parent.getRadius()+altitude;
+        }
+        else {
+            this.parent = new PSystem();
+            this.pathRadius = 0;
+        }
+    }
+
+    //blank system to be top level systems parent
+    public PSystem() {
     }
     
     // TODO
@@ -33,6 +44,23 @@ public class PSystem {
     public PSystem(String file) {
     }
     
+    public void addChildren(PSystem child) {
+        children.add(child);
+    }
+    
+    public void addChildren(ArrayList<PSystem> child) {
+        for(PSystem c : child) {
+            this.children.add(c);
+        }
+    }
+    
+    public PSystem getParent() {
+        return this.parent;
+    }
+    
+    public ArrayList getChildren() {
+        return this.children;
+    }
     
     public double getMass() {
         return this.centerMass;
@@ -42,7 +70,7 @@ public class PSystem {
         return this.radius;
     }
     
-    public double getAltitude() {
-        return this.altitude;
+    public double getPathRadius() {
+        return this.pathRadius;
     }
 }
