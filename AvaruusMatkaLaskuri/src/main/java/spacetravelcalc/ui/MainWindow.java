@@ -6,15 +6,19 @@
 package spacetravelcalc.ui;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import javafx.application.Application;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import spacetravelcalc.calculating.DeltaVCalc;
 import spacetravelcalc.calculating.PSystem;
+import spacetravelcalc.calculating.Place;
 
 
 /**
@@ -24,15 +28,17 @@ import spacetravelcalc.calculating.PSystem;
 public class MainWindow extends Application{
 
     private ArrayList<PSystem> topLevelSystems;
+    private HashMap<String, PSystem> systemMap;
     private PSystem system1;
     private PSystem system2;
-    private double alt1;
-    private double alt2;
+    private Double alt1;
+    private Double alt2;
     
     public MainWindow() {
         topLevelSystems = new ArrayList<>();
         
         //Load default systems
+        //Later from file
         PSystem earth = new PSystem("Maa", 5.97e24, 6.371e6, "Maa-kuu");
         PSystem moon = new PSystem("Kuu", 7.34e22, 1.738e6, 3.84e8, earth);
         
@@ -42,7 +48,6 @@ public class MainWindow extends Application{
         PSystem jupiter = new PSystem("Jupiter", 1.9e27, 71e6, 778e9, sun);
         PSystem io = new PSystem("Io", 8.94e22, 1.815e6, 421e6, jupiter);
         PSystem europa = new PSystem("Europa", 4.8e22, 1.57e6, 670e6, jupiter);
-        
         
         topLevelSystems.add(earth);
         topLevelSystems.add(sun);
@@ -76,10 +81,14 @@ public class MainWindow extends Application{
             MenuItem e = new MenuItem(p.getSystemName());
             e.setOnAction(event -> {
                 system.setText(e.getText());
+                
                 psystem1.setText("Valitse planeetta");
                 psystem2.setText("Valitse planeetta");
                 psystem1.getItems().clear();
                 psystem2.getItems().clear();
+                
+                systemMap = p.getSystemMap();
+                
                 for(PSystem q : p.getSystems()) {
                     MenuItem i = new MenuItem(q.getName());
                     i.setOnAction(action -> {
@@ -94,14 +103,26 @@ public class MainWindow extends Application{
                     });
                     psystem2.getItems().add(j);
                 }
-
             });
             system.getItems().add(e);
         }
         
-        left.getChildren().addAll(system, place1, psystem1, altitude1, place2, psystem2, altitude2);
-        right.getChildren().addAll();
+        Text answer = new Text();
+        Button calculate = new Button("Laske DV");
         
+        calculate.setOnAction(event -> {
+            if(system1 != null && system2 != null && alt1 != null && alt2 != null) {
+                Place a = new Place(system1, alt1);
+                Place b = new Place(system2, alt2);
+                double dv = DeltaVCalc.fromAToB(a, b);
+                answer.setText("Tarvittava DV:" + Double.toString((int) dv) + "m/s");
+            } else {
+                answer.setText("Anna paremmat arvot");
+            }
+        });
+        
+        left.getChildren().addAll(system, place1, psystem1, altitude1, place2, psystem2, altitude2);
+        right.getChildren().addAll(calculate, answer);
         
         group.setLeft(left);
         group.setRight(right);

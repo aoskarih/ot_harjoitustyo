@@ -6,6 +6,7 @@
 package spacetravelcalc.calculating;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  *
@@ -102,6 +103,14 @@ public class PSystem {
         } else {
             return parent.getSystemName();
         }
+    }
+    
+    public HashMap<String, PSystem> getSystemMap() {
+        HashMap<String, PSystem> sys = new HashMap<>();
+        for(PSystem p : getSystems()) {
+            sys.put(p.getName(), p);
+        }
+        return sys;
     }
     
     public ArrayList<PSystem> getSystems() {
