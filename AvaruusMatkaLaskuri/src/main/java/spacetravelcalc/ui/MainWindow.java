@@ -25,7 +25,7 @@ import spacetravelcalc.calculating.Place;
  *
  * @author hyarhyar
  */
-public class MainWindow extends Application{
+public class MainWindow extends Application {
 
     private ArrayList<PSystem> topLevelSystems;
     private HashMap<String, PSystem> systemMap;
@@ -54,10 +54,12 @@ public class MainWindow extends Application{
     }    
     
     @Override
-    public void start(Stage stage){
+    public void start(Stage stage) {
         BorderPane group = new BorderPane();
         VBox left = new VBox();
         VBox right = new VBox();
+        
+        Text info1 = new Text("\n\nValitse ensin systeemi.\n");
         
         Text place1 = new Text("\nLähtö planeetta ja kiertorata");
         Text place2 = new Text("\n\nKohde planeetta ja kiertorata");
@@ -65,19 +67,11 @@ public class MainWindow extends Application{
         NumberOnlyTextField altitude1 = new NumberOnlyTextField();
         NumberOnlyTextField altitude2 = new NumberOnlyTextField();
         
-        altitude1.setOnAction(event -> {
-            alt1 = Double.parseDouble(altitude1.getText());
-        });
-        
-        altitude2.setOnAction(event -> {
-            alt2 = Double.parseDouble(altitude2.getText());
-        });
-        
         MenuButton system = new MenuButton("Systeemi");
         MenuButton psystem1 = new MenuButton("Valitse planeetta");
         MenuButton psystem2 = new MenuButton("Valitse planeetta");
         
-        for(PSystem p : topLevelSystems) {
+        for (PSystem p : topLevelSystems) {
             MenuItem e = new MenuItem(p.getSystemName());
             e.setOnAction(event -> {
                 system.setText(e.getText());
@@ -89,7 +83,7 @@ public class MainWindow extends Application{
                 
                 systemMap = p.getSystemMap();
                 
-                for(PSystem q : p.getSystems()) {
+                for (PSystem q : p.getSystems()) {
                     MenuItem i = new MenuItem(q.getName());
                     i.setOnAction(action -> {
                         psystem1.setText(i.getText());
@@ -111,17 +105,25 @@ public class MainWindow extends Application{
         Button calculate = new Button("Laske DV");
         
         calculate.setOnAction(event -> {
-            if(system1 != null && system2 != null && alt1 != null && alt2 != null) {
+            
+            alt1 = Double.parseDouble(altitude1.getText());
+            alt2 = Double.parseDouble(altitude2.getText());
+            
+            if (system1 != null && system2 != null && alt1 != null && alt2 != null) {
                 Place a = new Place(system1, alt1);
                 Place b = new Place(system2, alt2);
                 double dv = DeltaVCalc.fromAToB(a, b);
-                answer.setText("Tarvittava DV:" + Double.toString((int) dv) + "m/s");
+                answer.setText("Tarvittava DV: " + Double.toString((int) dv) + " m/s");
             } else {
+                System.out.println(system1);
+                System.out.println(system2);
+                System.out.println(alt1);
+                System.out.println(alt2);
                 answer.setText("Anna paremmat arvot");
             }
         });
         
-        left.getChildren().addAll(system, place1, psystem1, altitude1, place2, psystem2, altitude2);
+        left.getChildren().addAll(info1, system, place1, psystem1, altitude1, place2, psystem2, altitude2);
         right.getChildren().addAll(calculate, answer);
         
         group.setLeft(left);

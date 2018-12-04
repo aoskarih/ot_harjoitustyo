@@ -13,8 +13,16 @@
 ## Komentorivitoiminnot
 
 ### Suoritus
+Joko suoraan komennolla
 
     mvn compile exec:java -Dexec.mainClass=spacetravelcalc.calculating.SpaceTravelCalc
+
+Tai ensin tekemällä .jar tiedoston komennolla ja sitten suorittamalla sen
+
+    mvn package
+    java -jar Syntyneen-tiedoston-nimi.jar
+
+
 
 ### Testaus
 
@@ -27,3 +35,7 @@ Testiraportti:
     mvn jacoco:report
 
 Labtoolissa oli palautteena, että testikattavuusraportin generointi ei onnistu. Minulla ei ole sen kanssa ollut ongelmia.
+
+Checkstyle testaus onnistuu komennolla
+
+    mvn jxr:jxr checkstyle:checkstyle

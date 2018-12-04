@@ -27,6 +27,9 @@ public class DeltaVCalcTest {
     PSystem io;
     PSystem europa;
     
+    Place lowOrbit;
+    Place geoOrbit;
+    
     @Before
     public void setUp() {
         sun = new PSystem("Aurinko", 1.986e30, 696e6, "Aurinkokunta");
@@ -35,6 +38,27 @@ public class DeltaVCalcTest {
         jupiter = new PSystem("Jupiter", 1.9e27, 71e6, 778e9, sun);
         io = new PSystem("Io", 8.94e22, 1.815e6, 421e6, jupiter);
         europa = new PSystem("Europa", 4.8e22, 1.57e6, 670e6, jupiter);
+        
+        lowOrbit = new Place(earth, 250e3);
+        geoOrbit = new Place(earth, 35786e3);
+    }
+    
+    @Test
+    public void hahmannToHigherOrbit() {
+        double dv = DeltaVCalc.fromAToB(lowOrbit, geoOrbit)/100;
+        assertEquals((int) dv*100, 3900);
+    }
+    
+    @Test
+    public void hahmannToLowerOrbit() {
+        double dv = DeltaVCalc.fromAToB(geoOrbit, lowOrbit)/100;
+        assertEquals((int) dv*100, 3900);
+    }
+    
+    @Test
+    public void hahmannToSameOrbit() {
+        double dv = DeltaVCalc.fromAToB(geoOrbit, geoOrbit);
+        assertEquals((int) dv, 0);
     }
     
     @Test

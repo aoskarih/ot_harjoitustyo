@@ -22,25 +22,18 @@ public class NumberOnlyTextField extends TextField {
         
         this.setTextFormatter(new TextFormatter<>( c -> 
         {
-            if ( c.getControlNewText().isEmpty() )
-            {
+            if (c.getControlNewText().isEmpty()) {
                 return c;
             }
 
             ParsePosition parsePosition = new ParsePosition(0);
             Object object = format.parse(c.getControlNewText(), parsePosition);
 
-            if (object == null || parsePosition.getIndex() < c.getControlNewText().length())
-            {
+            if (object == null || parsePosition.getIndex() < c.getControlNewText().length()) {
                 return null;
-            }
-            else
-            {
+            } else {
                 return c;
             }
         }));
     }
-    
-    
-    
 }

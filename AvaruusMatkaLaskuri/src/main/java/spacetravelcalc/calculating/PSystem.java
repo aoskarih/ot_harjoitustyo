@@ -52,7 +52,7 @@ public class PSystem {
     }
     
     public void addChildren(ArrayList<PSystem> child) {
-        for(PSystem c : child) {
+        for (PSystem c : child) {
             this.children.add(c);
         }
     }
@@ -67,10 +67,10 @@ public class PSystem {
     
     public ArrayList<PSystem> getAllChildren() {
         ArrayList<PSystem> systems = new ArrayList<>();
-        if(this.children.isEmpty()) {
+        if (this.children.isEmpty()) {
             return systems;
         }            
-        for(PSystem p : this.children) {
+        for (PSystem p : this.children) {
             systems.addAll(p.getAllChildren());
             systems.add(p);
         }
@@ -98,7 +98,7 @@ public class PSystem {
     }
     
     public String getSystemName() {
-        if(topLevel) {
+        if (topLevel) {
             return systemName;
         } else {
             return parent.getSystemName();
@@ -107,14 +107,14 @@ public class PSystem {
     
     public HashMap<String, PSystem> getSystemMap() {
         HashMap<String, PSystem> sys = new HashMap<>();
-        for(PSystem p : getSystems()) {
+        for (PSystem p : getSystems()) {
             sys.put(p.getName(), p);
         }
         return sys;
     }
     
     public ArrayList<PSystem> getSystems() {
-        if(topLevel) {
+        if (topLevel) {
             ArrayList<PSystem> systems = getAllChildren();
             systems.add(this);
             return systems;

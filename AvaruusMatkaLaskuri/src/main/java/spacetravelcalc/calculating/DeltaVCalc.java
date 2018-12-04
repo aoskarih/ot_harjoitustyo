@@ -27,13 +27,13 @@ public class DeltaVCalc {
         double r1;
         double r2;
         
-        if(path1.isEmpty()) {
+        if (path1.isEmpty()) {
             r1 = a.getRadius();
         } else {
             r1 = path1.get(0).getPathRadius();
         }
         
-        if(path2.isEmpty()) {
+        if (path2.isEmpty()) {
             r2 = b.getRadius();
         } else {
             r2 = path2.get(0).getPathRadius();
@@ -67,7 +67,7 @@ public class DeltaVCalc {
     
     private static double pathEscape(ArrayList<PSystem> path, Place p, double v0) {
         double dv = v0;
-        for(int i = 1; i < path.size(); i++) {
+        for (int i = 1; i < path.size(); i++) {
             dv = Transfers.escape(path.get(i).getPathRadius(), path.get(i-1).getMass(), dv);
         }
         dv = Transfers.escape(p.getRadius(), path.get(path.size()-1).getMass(), dv);
@@ -96,7 +96,7 @@ public class DeltaVCalc {
         PSystem parent2 = b.getParent();
         while (!parent1.getTopLevel()) {
             while (!parent2.getTopLevel()) {
-                if(parent1.equals(parent2)) {
+                if (parent1.equals(parent2)) {
                     return parent1;
                 }
                 parent2 = parent2.getParent();
