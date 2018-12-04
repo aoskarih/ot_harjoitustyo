@@ -29,12 +29,12 @@ public class DeltaVCalcTest {
     
     @Before
     public void setUp() {
-        sun = new PSystem(1.986e30, 696e6, 0, null);
-        earth = new PSystem(5.97e24, 6.378e6, 149e9, sun);
-        moon = new PSystem(7.35e22, 1.737e6, 384e6, earth);
-        jupiter = new PSystem(1.9e27, 71e6, 778e9, sun);
-        io = new PSystem(8.94e22, 1.815e6, 421e6, jupiter);
-        europa = new PSystem(4.8e22, 1.57e6, 670e6, jupiter);
+        sun = new PSystem("Aurinko", 1.986e30, 696e6, "Aurinkokunta");
+        earth = new PSystem("Maa", 5.97e24, 6.378e6, 149e9, sun);
+        moon = new PSystem("Kuu", 7.35e22, 1.737e6, 384e6, earth);
+        jupiter = new PSystem("Jupiter", 1.9e27, 71e6, 778e9, sun);
+        io = new PSystem("Io", 8.94e22, 1.815e6, 421e6, jupiter);
+        europa = new PSystem("Europa", 4.8e22, 1.57e6, 670e6, jupiter);
     }
     
     @Test

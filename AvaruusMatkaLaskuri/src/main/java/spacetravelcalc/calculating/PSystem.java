@@ -18,30 +18,32 @@ public class PSystem {
     private double pathRadius;
     private ArrayList<PSystem> children = new ArrayList<>();
     private PSystem parent;
+    private String name;
+    private boolean topLevel;
+    private String systemName = "";
     
-    //Default system
-    public PSystem(double mass, double radius, double altitude, PSystem parent) {
+    //Normal system
+    public PSystem(String name, double mass, double radius, double altitude, PSystem parent) {
         this.centerMass = mass;
         this.radius = radius;
+        this.name = name;
         
-        if (parent != null) {
-            parent.addChildren(this);
-            this.parent = parent;
-            this.pathRadius = parent.getRadius()+altitude;
-        }
-        else {
-            this.parent = new PSystem();
-            this.pathRadius = 0;
-        }
-    }
-
-    //blank system to be top level systems parent
-    public PSystem() {
+        parent.addChildren(this);
+        this.parent = parent;
+        this.pathRadius = parent.getRadius()+altitude;
+        
+        this.topLevel = false;
     }
     
-    // TODO
-    // System confuguration with file
-    public PSystem(String file) {
+    //Top level system
+    public PSystem(String name, double mass, double radius, String systemName) {
+        this.centerMass = mass;
+        this.radius = radius;
+        this.name = name;
+        this.parent = null;
+        this.pathRadius = 0;
+        this.topLevel = true;
+        this.systemName = systemName;
     }
     
     public void addChildren(PSystem child) {
@@ -58,8 +60,20 @@ public class PSystem {
         return this.parent;
     }
     
-    public ArrayList getChildren() {
+    public ArrayList<PSystem> getChildren() {
         return this.children;
+    }
+    
+    public ArrayList<PSystem> getAllChildren() {
+        ArrayList<PSystem> systems = new ArrayList<>();
+        if(this.children.isEmpty()) {
+            return systems;
+        }            
+        for(PSystem p : this.children) {
+            systems.addAll(p.getAllChildren());
+            systems.add(p);
+        }
+        return systems;
     }
     
     public double getMass() {
@@ -72,5 +86,31 @@ public class PSystem {
     
     public double getPathRadius() {
         return this.pathRadius;
+    }
+    
+    public boolean getTopLevel() {
+        return this.topLevel;
+    }
+    
+    public String getName() {
+        return this.name;
+    }
+    
+    public String getSystemName() {
+        if(topLevel) {
+            return systemName;
+        } else {
+            return parent.getSystemName();
+        }
+    }
+    
+    public ArrayList<PSystem> getSystems() {
+        if(topLevel) {
+            ArrayList<PSystem> systems = getAllChildren();
+            systems.add(this);
+            return systems;
+        } else {
+            return parent.getAllChildren();
+        }
     }
 }

@@ -51,8 +51,8 @@ public class DeltaVCalc {
     public static PSystem lowestCommonParent(Place a, Place b) {
         PSystem parent1 = a.getParent();
         PSystem parent2 = b.getParent();
-        while (parent1.getPathRadius() != 0) {
-            while (parent2.getPathRadius() != 0) {
+        while (!parent1.getTopLevel()) {
+            while (!parent2.getTopLevel()) {
                 if(parent1.equals(parent2)) {
                     return parent1;
                 }
