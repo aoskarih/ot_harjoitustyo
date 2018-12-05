@@ -15,7 +15,7 @@
 ### Suoritus
 Joko suoraan komennolla
 
-    mvn compile exec:java -Dexec.mainClass=spacetravelcalc.calculating.SpaceTravelCalc
+    mvn compile exec:java -Dexec.mainClass=spacetravelcalc.calculating.Main
 
 Tai ensin tekemällä .jar tiedoston komennolla ja sitten suorittamalla sen
 

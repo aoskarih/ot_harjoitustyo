@@ -119,7 +119,7 @@ public class PSystem {
             systems.add(this);
             return systems;
         } else {
-            return parent.getAllChildren();
+            return parent.getSystems();
         }
     }
 }

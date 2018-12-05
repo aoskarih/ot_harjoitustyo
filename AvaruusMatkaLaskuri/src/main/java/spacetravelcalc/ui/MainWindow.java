@@ -48,6 +48,8 @@ public class MainWindow extends Application {
         PSystem jupiter = new PSystem("Jupiter", 1.9e27, 71e6, 778e9, sun);
         PSystem io = new PSystem("Io", 8.94e22, 1.815e6, 421e6, jupiter);
         PSystem europa = new PSystem("Europa", 4.8e22, 1.57e6, 670e6, jupiter);
+        PSystem mars = new PSystem("Mars", 6.4e23, 3.4e6, 227e9, sun);
+        PSystem deimos = new PSystem("Deimos", 1.5e15, 6.2e3, 23.4e6, mars);
         
         topLevelSystems.add(earth);
         topLevelSystems.add(sun);
