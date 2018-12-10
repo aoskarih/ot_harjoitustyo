@@ -16,7 +16,7 @@ public class Place {
     
     public Place(PSystem parent, double altitude) {
         this.parent = parent;
-        this.radius = parent.getRadius()+altitude;
+        this.radius = parent.getRadius() + altitude;
     }
     
     public PSystem getParent() {

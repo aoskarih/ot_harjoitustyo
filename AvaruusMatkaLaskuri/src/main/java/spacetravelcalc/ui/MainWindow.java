@@ -5,8 +5,12 @@
  */
 package spacetravelcalc.ui;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -15,7 +19,9 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import spacetravelcalc.operating.SystemFileReader;
 import spacetravelcalc.calculating.DeltaVCalc;
 import spacetravelcalc.calculating.PSystem;
 import spacetravelcalc.calculating.Place;
@@ -34,25 +40,11 @@ public class MainWindow extends Application {
     private Double alt1;
     private Double alt2;
     
-    public MainWindow() {
+    public MainWindow() throws IOException {
         topLevelSystems = new ArrayList<>();
         
-        //Load default systems
-        //Later from file
-        PSystem earth = new PSystem("Maa", 5.97e24, 6.371e6, "Maa-kuu");
-        PSystem moon = new PSystem("Kuu", 7.34e22, 1.738e6, 3.84e8, earth);
-        
-        PSystem sun = new PSystem("Aurinko", 1.986e30, 696e6, "Aurinkokunta");
-        PSystem earth1 = new PSystem("Maa", 5.97e24, 6.378e6, 149e9, sun);
-        PSystem moon1 = new PSystem("Kuu", 7.35e22, 1.737e6, 384e6, earth1);
-        PSystem jupiter = new PSystem("Jupiter", 1.9e27, 71e6, 778e9, sun);
-        PSystem io = new PSystem("Io", 8.94e22, 1.815e6, 421e6, jupiter);
-        PSystem europa = new PSystem("Europa", 4.8e22, 1.57e6, 670e6, jupiter);
-        PSystem mars = new PSystem("Mars", 6.4e23, 3.4e6, 227e9, sun);
-        PSystem deimos = new PSystem("Deimos", 1.5e15, 6.2e3, 23.4e6, mars);
-        
-        topLevelSystems.add(earth);
-        topLevelSystems.add(sun);
+        //Load default system
+        topLevelSystems.add(SystemFileReader.getDefaultSystem());
     }    
     
     @Override
@@ -73,35 +65,17 @@ public class MainWindow extends Application {
         MenuButton psystem1 = new MenuButton("Valitse planeetta");
         MenuButton psystem2 = new MenuButton("Valitse planeetta");
         
-        for (PSystem p : topLevelSystems) {
-            MenuItem e = new MenuItem(p.getSystemName());
-            e.setOnAction(event -> {
-                system.setText(e.getText());
-                
-                psystem1.setText("Valitse planeetta");
-                psystem2.setText("Valitse planeetta");
-                psystem1.getItems().clear();
-                psystem2.getItems().clear();
-                
-                systemMap = p.getSystemMap();
-                
-                for (PSystem q : p.getSystems()) {
-                    MenuItem i = new MenuItem(q.getName());
-                    i.setOnAction(action -> {
-                        psystem1.setText(i.getText());
-                        system1 = q;
-                    });
-                    psystem1.getItems().add(i);
-                    MenuItem j = new MenuItem(q.getName());
-                    j.setOnAction(action -> {
-                        psystem2.setText(j.getText());
-                        system2 = q;
-                    });
-                    psystem2.getItems().add(j);
-                }
-            });
-            system.getItems().add(e);
-        }
+        updateSystems(system, psystem1, psystem2);
+        
+        Button addSys = new Button("Lisää uusi systeemi");
+        addSys.setOnAction(e -> {
+            try {
+                topLevelSystems.add(loadNewSystem(stage));
+                updateSystems(system, psystem1, psystem2);
+            } catch (IOException ex) {
+                System.out.println("Can't load new system from file.");
+            }
+        });
         
         Text answer = new Text();
         Button calculate = new Button("Laske DV");
@@ -125,7 +99,7 @@ public class MainWindow extends Application {
             }
         });
         
-        left.getChildren().addAll(info1, system, place1, psystem1, altitude1, place2, psystem2, altitude2);
+        left.getChildren().addAll(info1, system, place1, psystem1, altitude1, place2, psystem2, altitude2, addSys);
         right.getChildren().addAll(calculate, answer);
         
         group.setLeft(left);
@@ -137,6 +111,51 @@ public class MainWindow extends Application {
         
     }
     
+    private void updateSystems(MenuButton system, MenuButton psystem1, MenuButton psystem2) {
+        
+        system.getItems().clear();
+        
+        for (PSystem p : topLevelSystems) {
+            MenuItem e = new MenuItem(p.getSystemName());
+            e.setOnAction(event -> {
+                system.setText(e.getText());
+                
+                psystem1.setText("Valitse planeetta");
+                psystem2.setText("Valitse planeetta");
+                psystem1.getItems().clear();
+                psystem2.getItems().clear();
+                
+                systemMap = p.getSystemMap();
+                
+                for (PSystem q : p.getSystems()) {
+                    String label = "";
+                    if (q.layersDeep() == 0) {
+                        label = q.getName();
+                    } else {
+                        label = new String(new char[q.layersDeep()-1]).replace("\0", "   ") + "  ┗ " + q.getName();
+                    }
+                    MenuItem i = new MenuItem(label);
+                    i.setOnAction(action -> {
+                        psystem1.setText(i.getText());
+                        system1 = q;
+                    });
+                    psystem1.getItems().add(i);
+                    MenuItem j = new MenuItem(label);
+                    j.setOnAction(action -> {
+                        psystem2.setText(j.getText());
+                        system2 = q;
+                    });
+                    psystem2.getItems().add(j);
+                }
+            });
+            system.getItems().add(e);
+        }
     
+    }
     
+    private PSystem loadNewSystem(Stage stage) throws IOException {
+        FileChooser fileChooser = new FileChooser();
+        File sysFile = fileChooser.showOpenDialog(stage);
+        return SystemFileReader.getNewSystem(sysFile);
+    } 
 }

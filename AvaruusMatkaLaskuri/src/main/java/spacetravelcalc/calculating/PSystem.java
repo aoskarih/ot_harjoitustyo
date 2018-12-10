@@ -6,13 +6,14 @@
 package spacetravelcalc.calculating;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 
 /**
  *
  * @author hyarhyar
  */
-public class PSystem {
+public class PSystem implements Comparable<PSystem> {
     
     private double centerMass;
     private double radius;
@@ -31,7 +32,7 @@ public class PSystem {
         
         parent.addChildren(this);
         this.parent = parent;
-        this.pathRadius = parent.getRadius()+altitude;
+        this.pathRadius = parent.getRadius() + altitude;
         
         this.topLevel = false;
     }
@@ -67,12 +68,16 @@ public class PSystem {
     
     public ArrayList<PSystem> getAllChildren() {
         ArrayList<PSystem> systems = new ArrayList<>();
-        if (this.children.isEmpty()) {
+        ArrayList<PSystem> chi = this.children;
+        if (chi.isEmpty()) {
             return systems;
-        }            
-        for (PSystem p : this.children) {
-            systems.addAll(p.getAllChildren());
+        }      
+        Collections.sort(chi);
+        for (PSystem p : chi) {
             systems.add(p);
+            ArrayList<PSystem> chichi = p.getAllChildren();
+            Collections.sort(chichi);
+            systems.addAll(chichi);
         }
         return systems;
     }
@@ -105,6 +110,16 @@ public class PSystem {
         }
     }
     
+    public int layersDeep() {
+        PSystem s = this;
+        int layer = 0;
+        while (!s.topLevel) {
+            layer++;
+            s = s.getParent();
+        }
+        return layer;
+    }
+    
     public HashMap<String, PSystem> getSystemMap() {
         HashMap<String, PSystem> sys = new HashMap<>();
         for (PSystem p : getSystems()) {
@@ -115,11 +130,17 @@ public class PSystem {
     
     public ArrayList<PSystem> getSystems() {
         if (topLevel) {
-            ArrayList<PSystem> systems = getAllChildren();
+            ArrayList<PSystem> systems = new ArrayList<>();
             systems.add(this);
+            systems.addAll(getAllChildren());
             return systems;
         } else {
             return parent.getSystems();
         }
+    }
+
+    @Override
+    public int compareTo(PSystem o) {
+        return Double.compare(this.getPathRadius(), o.getPathRadius());
     }
 }

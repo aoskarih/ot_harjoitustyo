@@ -9,5 +9,6 @@
 | 4.12. | 5 | Käyttöliittymä aluilleen ja laskut muutettiin pätemään yleisemmin|
 | 4.12. | 1 | Readme päivitys ja toimivan .jar tiedoston generointi sekä checkstyle korjauksia |
 | 5.12. | 2 | Testejä ja refaktorointia |
+| 10.12.| 5 | Systeemin lisäys tiedostolla ja muuta tiedostoihin liittyvää |
 
-tot: 18 h
+tot: 23 h
