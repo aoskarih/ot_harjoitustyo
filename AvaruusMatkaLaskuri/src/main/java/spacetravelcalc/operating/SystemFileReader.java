@@ -14,32 +14,46 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import spacetravelcalc.calculating.PSystem;
+import spacetravelcalc.calculating.GravitationalSystem;
 
 /**
- *
+ * Luokka hoitaa systeemien oletus systeemien ja tiedostosta haettavien systeemien määrittämisen.
  * @author hyarhyar
  */
 public class SystemFileReader {
 
-    
-    public static PSystem getDefaultSystem() {
-        PSystem maa = new PSystem("Maa", 5.97e24, 6.37e6, "Maa-kuu");
-        PSystem kuu = new PSystem("Kuu", 7.34e22, 1.73e6, 3.84e8, maa);
+    /**
+     * Metodi määrittää oletus systeemin
+     * @return oletus systeemi
+     */
+    public static GravitationalSystem getDefaultSystem() {
+        GravitationalSystem maa = new GravitationalSystem("Maa", 5.97e24, 6.37e6, "Maa-kuu");
+        GravitationalSystem kuu = new GravitationalSystem("Kuu", 7.34e22, 1.73e6, 3.84e8, maa);        
         return maa;
     }
     
-    public static PSystem getNewSystem(File file) throws IOException {
-        PSystem topLevel = new PSystem("", 0, 0, "");
-        String[] lines = fileData(file).toArray(new String[0]);
+    /**
+     * Metodi ottaa tiedoston ja määrittää sen pohjalta uuden systeemin, jonka se palauttaa.
+     * @param file          systeemi tiedosto
+     * @return              uusi systeemi
+     * @throws IOException
+     */
+    public static GravitationalSystem getNewSystem(File file) throws IOException {
+        ArrayList<String> data = fileData(file);
+        return decode(data);
+    }
+    
+    public static GravitationalSystem decode(ArrayList<String> data) {
+        GravitationalSystem topLevel = new GravitationalSystem("", 0, 0, "");
+        String[] lines = data.toArray(new String[0]);
         boolean valid = false;
         for (String l : lines) {
-            String[] data = l.split(";");
-            if (data[0].equals("t")) {
-                topLevel = new PSystem(data[1], Double.parseDouble(data[2]), Double.parseDouble(data[3]), data[4]);
-            } else if (data[0].equals("c")) {
-                PSystem par = topLevel.getSystemMap().get(data[5]);
-                PSystem chi = new PSystem(data[1], Double.parseDouble(data[2]), Double.parseDouble(data[3]), Double.parseDouble(data[4]), par);
+            String[] dataArray = l.split(";");
+            if (dataArray[0].equals("t")) {
+                topLevel = new GravitationalSystem(dataArray[1], Double.parseDouble(dataArray[2]), Double.parseDouble(dataArray[3]), dataArray[4]);
+            } else if (dataArray[0].equals("c")) {
+                GravitationalSystem par = topLevel.getSystemMap().get(dataArray[5]);
+                GravitationalSystem chi = new GravitationalSystem(dataArray[1], Double.parseDouble(dataArray[2]), Double.parseDouble(dataArray[3]), Double.parseDouble(dataArray[4]), par);
             }
         }
         return topLevel;

@@ -8,7 +8,7 @@ package spacetravelcalc.calculating;
 import spacetravelcalc.ui.MainWindow;
 import javafx.application.Application;
 /**
- *
+ * Luokassa on main-metodi, joka avaa käyttöliittymän.
  * @author hyarhyar
  */
 public class Main {

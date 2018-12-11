@@ -6,20 +6,20 @@
 package spacetravelcalc.calculating;
 
 /**
- *
+ * Luokka määrittää paikan systeemissö.
  * @author hyarhyar
  */
 public class Place {
 
-    private PSystem parent;
+    private GravitationalSystem parent;
     private double radius;
     
-    public Place(PSystem parent, double altitude) {
+    public Place(GravitationalSystem parent, double altitude) {
         this.parent = parent;
         this.radius = parent.getRadius() + altitude;
     }
     
-    public PSystem getParent() {
+    public GravitationalSystem getParent() {
         return this.parent;
     }
     

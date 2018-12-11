@@ -20,15 +20,12 @@ public class NumberOnlyTextField extends TextField {
         
         DecimalFormat format = new DecimalFormat("#.0");
         
-        this.setTextFormatter(new TextFormatter<>( c -> 
-        {
+        this.setTextFormatter(new TextFormatter<>( c -> {
             if (c.getControlNewText().isEmpty()) {
                 return c;
             }
-
             ParsePosition parsePosition = new ParsePosition(0);
             Object object = format.parse(c.getControlNewText(), parsePosition);
-
             if (object == null || parsePosition.getIndex() < c.getControlNewText().length()) {
                 return null;
             } else {

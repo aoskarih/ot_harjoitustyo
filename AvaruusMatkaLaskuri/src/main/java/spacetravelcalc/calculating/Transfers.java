@@ -6,7 +6,7 @@
 package spacetravelcalc.calculating;
 
 /**
- *
+ * Luokka tarjoaa kaikki sovelluksessa tarvittavat fysikaaliset kaavat.
  * @author hyarhyar
  */
 public class Transfers {

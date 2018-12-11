@@ -23,20 +23,21 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import spacetravelcalc.operating.SystemFileReader;
 import spacetravelcalc.calculating.DeltaVCalc;
-import spacetravelcalc.calculating.PSystem;
+import spacetravelcalc.calculating.GravitationalSystem;
 import spacetravelcalc.calculating.Place;
 
 
 /**
- *
+ * Luokka tarjoaa käyttöliittymän pohjan sovellukselle
+ * 
  * @author hyarhyar
  */
 public class MainWindow extends Application {
 
-    private ArrayList<PSystem> topLevelSystems;
-    private HashMap<String, PSystem> systemMap;
-    private PSystem system1;
-    private PSystem system2;
+    private ArrayList<GravitationalSystem> topLevelSystems;
+    private HashMap<String, GravitationalSystem> systemMap;
+    private GravitationalSystem system1;
+    private GravitationalSystem system2;
     private Double alt1;
     private Double alt2;
     
@@ -54,7 +55,6 @@ public class MainWindow extends Application {
         VBox right = new VBox();
         
         Text info1 = new Text("\n\nValitse ensin systeemi.\n");
-        
         Text place1 = new Text("\nLähtö planeetta ja kiertorata");
         Text place2 = new Text("\n\nKohde planeetta ja kiertorata");
         
@@ -65,36 +65,31 @@ public class MainWindow extends Application {
         MenuButton psystem1 = new MenuButton("Valitse planeetta");
         MenuButton psystem2 = new MenuButton("Valitse planeetta");
         
+        
         updateSystems(system, psystem1, psystem2);
         
         Button addSys = new Button("Lisää uusi systeemi");
-        addSys.setOnAction(e -> {
-            try {
+        try {
+            addSys.setOnAction(e -> {
                 topLevelSystems.add(loadNewSystem(stage));
                 updateSystems(system, psystem1, psystem2);
-            } catch (IOException ex) {
-                System.out.println("Can't load new system from file.");
-            }
-        });
+            });
+        } catch (NullPointerException e) {
+            System.out.println("didn't get a file");
+        }
         
         Text answer = new Text();
         Button calculate = new Button("Laske DV");
         
         calculate.setOnAction(event -> {
-            
-            alt1 = Double.parseDouble(altitude1.getText());
-            alt2 = Double.parseDouble(altitude2.getText());
-            
-            if (system1 != null && system2 != null && alt1 != null && alt2 != null) {
+            if (system1 != null && system2 != null && !altitude1.getText().isEmpty() && !altitude2.getText().isEmpty()) {
+                alt1 = Double.parseDouble(altitude1.getText());
+                alt2 = Double.parseDouble(altitude2.getText());
                 Place a = new Place(system1, alt1);
                 Place b = new Place(system2, alt2);
                 double dv = DeltaVCalc.fromAToB(a, b);
                 answer.setText("Tarvittava DV: " + Double.toString((int) dv) + " m/s");
             } else {
-                System.out.println(system1);
-                System.out.println(system2);
-                System.out.println(alt1);
-                System.out.println(alt2);
                 answer.setText("Anna paremmat arvot");
             }
         });
@@ -115,7 +110,7 @@ public class MainWindow extends Application {
         
         system.getItems().clear();
         
-        for (PSystem p : topLevelSystems) {
+        for (GravitationalSystem p : topLevelSystems) {
             MenuItem e = new MenuItem(p.getSystemName());
             e.setOnAction(event -> {
                 system.setText(e.getText());
@@ -125,9 +120,12 @@ public class MainWindow extends Application {
                 psystem1.getItems().clear();
                 psystem2.getItems().clear();
                 
+                system1 = null;
+                system2 = null;
+                
                 systemMap = p.getSystemMap();
                 
-                for (PSystem q : p.getSystems()) {
+                for (GravitationalSystem q : p.getSystems()) {
                     String label = "";
                     if (q.layersDeep() == 0) {
                         label = q.getName();
@@ -150,12 +148,16 @@ public class MainWindow extends Application {
             });
             system.getItems().add(e);
         }
-    
     }
     
-    private PSystem loadNewSystem(Stage stage) throws IOException {
+    private GravitationalSystem loadNewSystem(Stage stage) {
         FileChooser fileChooser = new FileChooser();
-        File sysFile = fileChooser.showOpenDialog(stage);
-        return SystemFileReader.getNewSystem(sysFile);
+        try {
+            File sysFile = fileChooser.showOpenDialog(stage);
+            return SystemFileReader.getNewSystem(sysFile); 
+        } catch (IOException e) {
+            System.out.println("Could not load file.");
+        }
+        return null;
     } 
 }

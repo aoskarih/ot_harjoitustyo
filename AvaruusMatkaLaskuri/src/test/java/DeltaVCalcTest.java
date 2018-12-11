@@ -5,7 +5,7 @@
  */
 
 import spacetravelcalc.calculating.DeltaVCalc;
-import spacetravelcalc.calculating.PSystem;
+import spacetravelcalc.calculating.GravitationalSystem;
 import spacetravelcalc.calculating.Place;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -20,24 +20,24 @@ import static org.junit.Assert.*;
  */
 public class DeltaVCalcTest {
     
-    PSystem sun;
-    PSystem earth;
-    PSystem moon;
-    PSystem jupiter;
-    PSystem io;
-    PSystem europa;
+    GravitationalSystem sun;
+    GravitationalSystem earth;
+    GravitationalSystem moon;
+    GravitationalSystem jupiter;
+    GravitationalSystem io;
+    GravitationalSystem europa;
     
     Place lowOrbit;
     Place geoOrbit;
     
     @Before
     public void setUp() {
-        sun = new PSystem("Aurinko", 1.986e30, 696e6, "Aurinkokunta");
-        earth = new PSystem("Maa", 5.97e24, 6.378e6, 149e9, sun);
-        moon = new PSystem("Kuu", 7.35e22, 1.737e6, 384e6, earth);
-        jupiter = new PSystem("Jupiter", 1.9e27, 71e6, 778e9, sun);
-        io = new PSystem("Io", 8.94e22, 1.815e6, 421e6, jupiter);
-        europa = new PSystem("Europa", 4.8e22, 1.57e6, 670e6, jupiter);
+        sun = new GravitationalSystem("Aurinko", 1.986e30, 696e6, "Aurinkokunta");
+        earth = new GravitationalSystem("Maa", 5.97e24, 6.378e6, 149e9, sun);
+        moon = new GravitationalSystem("Kuu", 7.35e22, 1.737e6, 384e6, earth);
+        jupiter = new GravitationalSystem("Jupiter", 1.9e27, 71e6, 778e9, sun);
+        io = new GravitationalSystem("Io", 8.94e22, 1.815e6, 421e6, jupiter);
+        europa = new GravitationalSystem("Europa", 4.8e22, 1.57e6, 670e6, jupiter);
         
         lowOrbit = new Place(earth, 250e3);
         geoOrbit = new Place(earth, 35786e3);
@@ -63,31 +63,31 @@ public class DeltaVCalcTest {
     
     @Test
     public void commomParentSame() {
-         PSystem parent = DeltaVCalc.lowestCommonParent(new Place(earth, 0), new Place(earth, 0));
+         GravitationalSystem parent = DeltaVCalc.lowestCommonParent(new Place(earth, 0), new Place(earth, 0));
          assertEquals(parent, earth);
     }
 
     @Test
     public void commomParentTopLevel() {
-         PSystem parent = DeltaVCalc.lowestCommonParent(new Place(earth, 0), new Place(jupiter, 0));
+         GravitationalSystem parent = DeltaVCalc.lowestCommonParent(new Place(earth, 0), new Place(jupiter, 0));
          assertEquals(parent, sun);
     }
     
     @Test
     public void commomParentDeeper() {
-         PSystem parent = DeltaVCalc.lowestCommonParent(new Place(moon, 0), new Place(io, 0));
+         GravitationalSystem parent = DeltaVCalc.lowestCommonParent(new Place(moon, 0), new Place(io, 0));
          assertEquals(parent, sun);
     }
     
     @Test
     public void commomParentDifferentLayer() {
-         PSystem parent = DeltaVCalc.lowestCommonParent(new Place(earth, 0), new Place(io, 0));
+         GravitationalSystem parent = DeltaVCalc.lowestCommonParent(new Place(earth, 0), new Place(io, 0));
          assertEquals(parent, sun);
     }
     
     @Test
     public void commomParentSameNotTopLeve() {
-         PSystem parent = DeltaVCalc.lowestCommonParent(new Place(io, 0), new Place(europa, 0));
+         GravitationalSystem parent = DeltaVCalc.lowestCommonParent(new Place(io, 0), new Place(europa, 0));
          assertEquals(parent, jupiter);
     }
     

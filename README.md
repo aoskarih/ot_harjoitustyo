@@ -3,6 +3,7 @@
 
 ## Dokumentaatio
 
+[käyttöohje](https://github.com/aoskarih/ot_harjoitustyo/blob/master/docs/kayttoohje.md)
 
 [vaatimusmäärittely](https://github.com/aoskarih/ot_harjoitustyo/blob/master/docs/vaatimusmaarittely.md)
 
@@ -39,3 +40,8 @@ Labtoolissa oli palautteena, että testikattavuusraportin generointi ei onnistu.
 Checkstyle testaus onnistuu komennolla
 
     mvn jxr:jxr checkstyle:checkstyle
+
+### JavaDoc
+JavaDocin saa generoitua komennolla
+
+    mvn javadoc:javadoc

@@ -9,17 +9,24 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 /**
- *
+ * Luokka laskee tarvittavan DV:n kaikkiin siirtymiin paikasta a paikkaan b.
  * @author hyarhyar
  */
 public class DeltaVCalc {
 
+    /**
+     * Metodi laskee tarvittavan DV:n mihin tahansa siirtymään ja palauttaa sen
+     * 
+     * @param a     Lähtö paikka
+     * @param b     Kohde paikka
+     * @return      Siirtymän vaatima DV
+     */
     public static double fromAToB(Place a, Place b) {
         
-        PSystem commonParent = lowestCommonParent(a, b);
+        GravitationalSystem commonParent = lowestCommonParent(a, b);
         
-        ArrayList<PSystem> path1 = pathToParent(a.getParent(), commonParent);
-        ArrayList<PSystem> path2 = pathToParent(b.getParent(), commonParent);
+        ArrayList<GravitationalSystem> path1 = pathToParent(a.getParent(), commonParent);
+        ArrayList<GravitationalSystem> path2 = pathToParent(b.getParent(), commonParent);
         
         double dv1;
         double dv2;
@@ -45,11 +52,8 @@ public class DeltaVCalc {
             return sameParent(a, b);
         } else if (b.getParent().equals(commonParent)) {            
             dv1 = Transfers.hohmann1(r1, r2, commonParent.getMass());
-            System.out.println(dv1);
             dv1 = pathEscape(path1, a, dv1);
             dv2 = Transfers.hohmann2(r1, r2, commonParent.getMass());
-            System.out.println(dv1);
-            System.out.println(dv2);
             return dv1 + dv2;
         } else if (a.getParent().equals(commonParent)) {
             dv2 = Transfers.hohmann1(r2, r1, commonParent.getMass());
@@ -65,7 +69,7 @@ public class DeltaVCalc {
         }
     }
     
-    private static double pathEscape(ArrayList<PSystem> path, Place p, double v0) {
+    private static double pathEscape(ArrayList<GravitationalSystem> path, Place p, double v0) {
         double dv = v0;
         for (int i = 1; i < path.size(); i++) {
             dv = Transfers.escape(path.get(i).getPathRadius(), path.get(i - 1).getMass(), dv);
@@ -80,9 +84,9 @@ public class DeltaVCalc {
         return dv1 + dv2;
     }
     
-    private static ArrayList<PSystem> pathToParent(PSystem a, PSystem b) {
-        ArrayList<PSystem> systems = new ArrayList<>();
-        PSystem sys = a;
+    private static ArrayList<GravitationalSystem> pathToParent(GravitationalSystem a, GravitationalSystem b) {
+        ArrayList<GravitationalSystem> systems = new ArrayList<>();
+        GravitationalSystem sys = a;
         while (sys != b) {
             systems.add(sys);
             sys = sys.getParent();
@@ -91,9 +95,9 @@ public class DeltaVCalc {
         return systems;
     }
     
-    public static PSystem lowestCommonParent(Place a, Place b) {
-        PSystem parent1 = a.getParent();
-        PSystem parent2 = b.getParent();
+    public static GravitationalSystem lowestCommonParent(Place a, Place b) {
+        GravitationalSystem parent1 = a.getParent();
+        GravitationalSystem parent2 = b.getParent();
         while (!parent1.getTopLevel()) {
             while (!parent2.getTopLevel()) {
                 if (parent1.equals(parent2)) {

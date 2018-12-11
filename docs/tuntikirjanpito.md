@@ -10,5 +10,6 @@
 | 4.12. | 1 | Readme päivitys ja toimivan .jar tiedoston generointi sekä checkstyle korjauksia |
 | 5.12. | 2 | Testejä ja refaktorointia |
 | 10.12.| 5 | Systeemin lisäys tiedostolla ja muuta tiedostoihin liittyvää |
+| 11.12.| 3 | Testejä, javadoc aluille ja refaktorointia |
 
-tot: 23 h
+tot: 26 h
