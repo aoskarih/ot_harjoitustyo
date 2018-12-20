@@ -51,18 +51,18 @@ public class DeltaVCalc {
         } else if (a.getParent().equals(b.getParent())) {
             return sameParent(a, b);
         } else if (b.getParent().equals(commonParent)) {            
-            dv1 = Transfers.hohmann1(r1, r2, commonParent.getMass());
+            dv1 = PhysicsEquations.hohmann1(r1, r2, commonParent.getMass());
             dv1 = pathEscape(path1, a, dv1);
-            dv2 = Transfers.hohmann2(r1, r2, commonParent.getMass());
+            dv2 = PhysicsEquations.hohmann2(r1, r2, commonParent.getMass());
             return dv1 + dv2;
         } else if (a.getParent().equals(commonParent)) {
-            dv2 = Transfers.hohmann1(r2, r1, commonParent.getMass());
+            dv2 = PhysicsEquations.hohmann1(r2, r1, commonParent.getMass());
             dv2 = pathEscape(path2, b, dv2);
-            dv1 = Transfers.hohmann2(r2, r1, commonParent.getMass());
+            dv1 = PhysicsEquations.hohmann2(r2, r1, commonParent.getMass());
             return dv1 + dv2;
         } else {
-            dv1 = Transfers.hohmann1(r1, r2, commonParent.getMass());
-            dv2 = Transfers.hohmann2(r2, r1, commonParent.getMass());
+            dv1 = PhysicsEquations.hohmann1(r1, r2, commonParent.getMass());
+            dv2 = PhysicsEquations.hohmann2(r2, r1, commonParent.getMass());
             dv1 = pathEscape(path1, a, dv1);
             dv2 = pathEscape(path1, b, dv2);
             return dv1 + dv2;
@@ -72,15 +72,15 @@ public class DeltaVCalc {
     private static double pathEscape(ArrayList<GravitationalSystem> path, Place p, double v0) {
         double dv = v0;
         for (int i = 1; i < path.size(); i++) {
-            dv = Transfers.escape(path.get(i).getPathRadius(), path.get(i - 1).getMass(), dv);
+            dv = PhysicsEquations.escape(path.get(i).getPathRadius(), path.get(i - 1).getMass(), dv);
         }
-        dv = Transfers.escape(p.getRadius(), path.get(path.size() - 1).getMass(), dv);
+        dv = PhysicsEquations.escape(p.getRadius(), path.get(path.size() - 1).getMass(), dv);
         return dv;
     }
     
     private static double sameParent(Place a, Place b) {
-        double dv1 = Transfers.hohmann1(a.getRadius(), b.getRadius(), a.getParent().getMass());        
-        double dv2 = Transfers.hohmann2(a.getRadius(), b.getRadius(), a.getParent().getMass());
+        double dv1 = PhysicsEquations.hohmann1(a.getRadius(), b.getRadius(), a.getParent().getMass());        
+        double dv2 = PhysicsEquations.hohmann2(a.getRadius(), b.getRadius(), a.getParent().getMass());
         return dv1 + dv2;
     }
     

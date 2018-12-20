@@ -102,4 +102,10 @@ public class DeltaVCalcTest {
         double dv = DeltaVCalc.fromAToB(new Place(moon, 100e3), new Place(earth, 250e3))/100;
         assertEquals(3900, (int) dv*100);
     }
+    
+    @Test
+    public void multipleLayers() {
+        double dv = DeltaVCalc.fromAToB(new Place(moon, 100e3), new Place(io, 100e3))/100;
+        assertEquals(13100, (int) dv*100);
+    }
 }

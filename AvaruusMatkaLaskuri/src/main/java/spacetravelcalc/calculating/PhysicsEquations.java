@@ -9,7 +9,7 @@ package spacetravelcalc.calculating;
  * Luokka tarjoaa kaikki sovelluksessa tarvittavat fysikaaliset kaavat.
  * @author hyarhyar
  */
-public class Transfers {
+public class PhysicsEquations {
     
     private static double G = 6.67408e-11;
     
@@ -32,6 +32,13 @@ public class Transfers {
     //Capture dv when arriving to child
     public static double capture(double r, double mass, double v) {
         return Math.sqrt(Math.pow(v, 2) + 2 * (mass * G / r)) - Math.sqrt(mass * G / r);
+    }
+    
+    public static double kepler3rd(double r1, double r2, double mass) {
+        
+        double a = (r1 + r2)/2;
+        double t = Math.sqrt(4 * Math.PI * Math.PI * (1 /(G * mass)) * Math.pow(a, 3));
+        return t;
     }
     
 }

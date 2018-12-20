@@ -11,5 +11,5 @@
 | 5.12. | 2 | Testejä ja refaktorointia |
 | 10.12.| 5 | Systeemin lisäys tiedostolla ja muuta tiedostoihin liittyvää |
 | 11.12.| 3 | Testejä, javadoc aluille ja refaktorointia |
-
-tot: 26 h
+| 20.12.| 2 | Matka-aika laskut ja ui|
+tot: 28 h

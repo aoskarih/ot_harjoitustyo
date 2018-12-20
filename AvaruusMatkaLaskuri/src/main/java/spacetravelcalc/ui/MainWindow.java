@@ -17,6 +17,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
@@ -25,6 +26,7 @@ import spacetravelcalc.operating.SystemFileReader;
 import spacetravelcalc.calculating.DeltaVCalc;
 import spacetravelcalc.calculating.GravitationalSystem;
 import spacetravelcalc.calculating.Place;
+import spacetravelcalc.calculating.TravelTimeCalc;
 
 
 /**
@@ -55,11 +57,14 @@ public class MainWindow extends Application {
         VBox right = new VBox();
         
         Text info1 = new Text("\n\nValitse ensin systeemi.\n");
-        Text place1 = new Text("\nLähtö planeetta ja kiertorata");
-        Text place2 = new Text("\n\nKohde planeetta ja kiertorata");
+        Text place1 = new Text("\n\nLähtö planeetta ja kiertoradan korkeus metreissä\n");
+        Text place2 = new Text("\n\nKohde planeetta ja kiertoradan korkeus metreissä\n");
         
         NumberOnlyTextField altitude1 = new NumberOnlyTextField();
         NumberOnlyTextField altitude2 = new NumberOnlyTextField();
+        
+        HBox altitudeBox1 = new HBox(altitude1, new Text("m"));
+        HBox altitudeBox2 = new HBox(altitude2, new Text("m"));
         
         MenuButton system = new MenuButton("Systeemi");
         MenuButton psystem1 = new MenuButton("Valitse planeetta");
@@ -78,24 +83,41 @@ public class MainWindow extends Application {
             System.out.println("didn't get a file");
         }
         
-        Text answer = new Text();
-        Button calculate = new Button("Laske DV");
+        Text answerDV = new Text();
+        Text answerTime = new Text();
+        Button calculateDV = new Button("Laske DV");
+        Button calculateTime = new Button("Laske matka-aika");
         
-        calculate.setOnAction(event -> {
+        
+        calculateDV.setOnAction(event -> {
             if (system1 != null && system2 != null && !altitude1.getText().isEmpty() && !altitude2.getText().isEmpty()) {
                 alt1 = Double.parseDouble(altitude1.getText());
                 alt2 = Double.parseDouble(altitude2.getText());
                 Place a = new Place(system1, alt1);
                 Place b = new Place(system2, alt2);
                 double dv = DeltaVCalc.fromAToB(a, b);
-                answer.setText("Tarvittava DV: " + Double.toString((int) dv) + " m/s");
+                answerDV.setText("\nTarvittava DV:  \n" + Double.toString((int) dv) + " m/s");
             } else {
-                answer.setText("Anna paremmat arvot");
+                answerDV.setText("Anna paremmat arvot");
             }
         });
         
-        left.getChildren().addAll(info1, system, place1, psystem1, altitude1, place2, psystem2, altitude2, addSys);
-        right.getChildren().addAll(calculate, answer);
+        calculateTime.setOnAction(event -> {
+            if (system1 != null && system2 != null && !altitude1.getText().isEmpty() && !altitude2.getText().isEmpty()) {
+                alt1 = Double.parseDouble(altitude1.getText());
+                alt2 = Double.parseDouble(altitude2.getText());
+                Place a = new Place(system1, alt1);
+                Place b = new Place(system2, alt2);
+                double time = TravelTimeCalc.timeFromAToB(a, b);
+                System.out.println(time);
+                answerTime.setText("\nMatkaan kuluva aika on noin:  \n" + Double.toString((int) (time/1000) * 1000) + " sekuntia  tai \n" + Double.toString((int) (time / 86400)) + " päivää");
+            } else {
+                answerTime.setText("Anna paremmat arvot");
+            }
+        });
+        
+        left.getChildren().addAll(info1, system, place1, psystem1, altitudeBox1, place2, psystem2, altitudeBox2, new Text("\n\n"), addSys);
+        right.getChildren().addAll(new Text("\n\n"), calculateDV, answerDV, new Text("\n\n"), calculateTime, answerTime);
         
         group.setLeft(left);
         group.setRight(right);

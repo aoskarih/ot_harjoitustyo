@@ -66,14 +66,12 @@ public class GravitationalSystem implements Comparable<GravitationalSystem> {
         this.systemName = systemName;
     }
     
+    /**
+     * Metodi lisää annetun systeemin tähän systeemiin.
+     * @param child
+     */
     public void addChildren(GravitationalSystem child) {
         children.add(child);
-    }
-    
-    public void addChildren(ArrayList<GravitationalSystem> child) {
-        for (GravitationalSystem c : child) {
-            this.children.add(c);
-        }
     }
     
     public GravitationalSystem getParent() {
@@ -81,7 +79,7 @@ public class GravitationalSystem implements Comparable<GravitationalSystem> {
     }
     
     /**
-     * Metodi palauttaa tämän systeemin lapset
+     * Metodi palauttaa tämän systeemin lapset.
      * 
      * @return tämän systeemin lapset
      */
