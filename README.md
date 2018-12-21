@@ -16,6 +16,8 @@ Sovelluksella voi laskea erinäisiä arvoja, jotka liittyvät avaruusaluksen mat
 
 ## Komentorivitoiminnot
 
+Kaikki komennot kannattaa suorittaa sijainnissa .../Avaruusmatkalaskuri
+
 ### Suoritus
 Joko suoraan komennolla
 
