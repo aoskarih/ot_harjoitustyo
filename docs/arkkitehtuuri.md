@@ -1,11 +1,12 @@
-
+# Arkkitehtuuri
 
 ## Rakenne
 
+Ohjeman rakenteessa perusidea oli tehdä käyttöliittymä pakkaus (ui), joka käyttää sovelluslogiikka pakkausta (calculating) ja muihin toimintoihin käytettävää pakkausta (operating).
 
+Sovelluslogiikan sisäinen rakenne muodostuu laskureista (DeltaVCalc ja TravelTimeCalc), joita käyttöliittymä kutsuu. Lisäksi tarvitaan systeemi, jossa laskut suoritetaan ja tämän määrittelee luokka GravitationalSystem, tai joukko GravitationalSystem objekteja, jotka muodostavat "puun" riippuen siitä kuka on kenenkin kiertoradalla. Luokka Place on datatyyppi, joka määrittelee paikan. Luokka PhysicsEquations tarjoaa laskureille kaavat laskemiseen.
 
 ![Pakkauskaavio](https://github.com/aoskarih/ot_harjoitustyo/blob/master/docs/Pakkauskaavio.png)
-
 
 ## Käyttöliittymä
 
