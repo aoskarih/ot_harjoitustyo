@@ -34,6 +34,7 @@ public class PhysicsEquations {
         return Math.sqrt(Math.pow(v, 2) + 2 * (mass * G / r)) - Math.sqrt(mass * G / r);
     }
     
+    //Orbital period
     public static double kepler3rd(double r1, double r2, double mass) {
         
         double a = (r1 + r2)/2;

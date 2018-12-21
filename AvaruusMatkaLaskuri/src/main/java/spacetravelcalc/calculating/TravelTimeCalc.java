@@ -6,11 +6,17 @@
 package spacetravelcalc.calculating;
 
 /**
- *
+ * Luokka matka-ajan laskemiseen
  * @author hyarhyar
  */
 public class TravelTimeCalc {
     
+    /**
+     * Metodi laskee matka-ajan ja palauttaa sen.
+     * @param a
+     * @param b
+     * @return matka-aika
+     */
     public static double timeFromAToB(Place a, Place b) {
         
         GravitationalSystem commonParent = DeltaVCalc.lowestCommonParent(a, b);
@@ -18,10 +24,15 @@ public class TravelTimeCalc {
         double r1 = altitudeToParent(commonParent, a);
         double r2 = altitudeToParent(commonParent, b);
         double t = PhysicsEquations.kepler3rd(r1, r2, commonParent.getMass()) / 2;
-        System.out.println(t);
         return t;
     }
     
+    /**
+     * Metodi palauttaa paikan p etäisyyden joko sen vanhempaan tai mihin tahansa vielä ylemmän tason vanhempaan.
+     * @param parent
+     * @param p
+     * @return etäisyys
+     */
     public static double altitudeToParent(GravitationalSystem parent, Place p) {
         if (p.getParent().toString().equals(parent.toString())) {
             return p.getRadius();

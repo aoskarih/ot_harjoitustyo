@@ -6,7 +6,7 @@ Ensin valitaa systeemi, missä laskut halutaan suorittaa. Systeemin voi valita y
 
 Sitten valitaan lähtöpaikka ja kohde. Tämä tapahtuu valitsemalla kierrettävä kappale ja kiertoradan korkeus. Kierrettävät kappaleet saa dropdown-valikoista. Kiertoradan korkeuden voi syöttää tekstikenttään. Ohjelma olettaa korkeuden yksiköksi metrejä.
 
-Sitten laskut voi suorittaa oikeassa laidassa olevalla napilla.
+Sitten laskut voi suorittaa oikeassa laidassa olevilla napeilla.
 
 ## Systeemin lisäys tiedostolla
 
